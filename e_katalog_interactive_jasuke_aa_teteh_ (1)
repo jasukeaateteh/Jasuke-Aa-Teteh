@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Katalog Jasuke Aa Teteh Interaktif</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Container untuk Video Latar Belakang */
+        .video-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-bg-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .food-card {
+            transition: all 0.25s ease-in-out;
+        }
+        .food-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(217, 119, 6, 0.2);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .topping-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+        }
+        .topping-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fff;
+            cursor: pointer;
+            transition: .2s;
+            text-align: left;
+        }
+        .topping-option:hover { border-color: #f59e0b; background: #fffbeb; }
+        .topping-option.selected {
+            border-color: #f59e0b;
+            background: #fff7ed;
+            box-shadow: 0 0 0 2px rgba(245,158,11,.18);
+        }
+        .topping-option img {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .topping-option span {
+            font-size: 10px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #374151;
+        }
+        @media (max-width: 380px) {
+            .topping-grid { grid-template-columns: 1fr; }
+        }
+        .cart-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 9px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen pb-28 font-sans">
+
+    <!-- Video Background -->
+    <div class="video-bg-container">
+        <video autoplay loop muted playsinline poster="https://cdn.phototourl.com/member/2026-09-29-e4f5a79a-5c51-484b-a4e9-214d5cd05bab.jpg">
+            <source src="https://videotourl.com/videos/1790661212533-34bc347f-0396-41ce-b088-b50ccb3f1c71.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+    </div>
+
+    <!-- Overlay Latar Belakang Transparan untuk Keterbacaan Teks -->
+    <div class="min-h-screen bg-green-950/40 backdrop-blur-[2px] pb-10">
+
+        <!-- Top Banner / Header -->
+        <header class="bg-gradient-to-r from-emerald-800/90 via-green-700/90 to-emerald-900/90 backdrop-blur-md text-white shadow-xl sticky top-0 z-40 border-b border-yellow-400/30">
+            <div class="max-w-4xl mx-auto px-4 py-3.5 flex flex-col sm:flex-row justify-between items-center gap-2">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-2xl font-black tracking-wide flex items-center justify-center sm:justify-start gap-2 drop-shadow">
+                        <i class="fa-solid fa-wheat-awn text-yellow-300 text-3xl"></i> Jasuke Aa Teteh
+                    </h1>
+                    <p class="text-xs font-medium text-amber-100 italic">"Dibuat dengan Cinta dan Kualitas"</p>
+                </div>
+                <div class="flex items-center gap-2 bg-emerald-950/70 px-3 py-1.5 rounded-full border border-yellow-300/40 text-xs shadow-inner">
+                    <i class="fa-brands fa-whatsapp text-green-400 text-base font-bold"></i>
+                    <span class="font-semibold">08134995039</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <main class="max-w-4xl mx-auto px-4 py-6">
+
+            <!-- Banner Promosi Video / Video Display Box -->
+            <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-lg mb-6 border border-amber-200">
+                <h2 class="text-xs font-bold text-amber-900 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-play text-red-500 text-base"></i> Video Menu & Promo Jasuke Aa Teteh
+                </h2>
+                <div class="relative w-full rounded-xl overflow-hidden shadow-inner bg-black aspect-video max-h-80 flex items-center justify-center">
+                    <video controls class="w-full h-full object-cover" poster="https://cdn.phototourl.com/member/2026-09-29-e4f5a79a-5c51-484b-a4e9-214d5cd05bab.jpg">
+                        <source src="https://videotourl.com/videos/1790726247785-ce3cfa5c-2714-4fc6-8d09-465d36b496d7.mp4">
+                        Video promo tidak dapat diputar.
+                    </video>
+                </div>
+            </div>
+
+            <!-- Info Kontak & Lokasi Box -->
+            <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg mb-6 border border-amber-200 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm text-gray-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">WhatsApp Pemesanan</p>
+                        <p class="font-bold text-gray-800">08134995039</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Email Kontak</p>
+                        <p class="font-bold text-gray-800">jasukeaateteh@gmail.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Lokasi Outlet</p>
+                        <a href="https://maps.google.com/?cid=13262324158163172182&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ" target="_blank" class="font-bold text-amber-700 hover:underline text-xs block">Jasuke Aa Teteh (Gg. Merpati 3, Abepura)</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Kategori Menu -->
+            <div class="flex gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
+                <button onclick="filterCategory(this, 'all')" class="cat-btn active px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-amber-500 text-white shadow-md">Semua Menu</button>
+                <button onclick="filterCategory(this, 'jasuke')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-white/90 backdrop-blur-sm text-gray-800 border border-amber-200 hover:bg-amber-100 shadow-sm">🌽 Jasuke</button>
+                <button onclick="filterCategory(this, 'kesuke')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-white/90 backdrop-blur-sm text-gray-800 border border-amber-200 hover:bg-amber-100 shadow-sm">🥣 Kesuke</button>
+                <button onclick="filterCategory(this, 'mix')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-white/90 backdrop-blur-sm text-gray-800 border border-amber-200 hover:bg-amber-100 shadow-sm">🍧 Mix Jasuke Kesuke</button>
+                <button onclick="filterCategory(this, 'es')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-white/90 backdrop-blur-sm text-gray-800 border border-amber-200 hover:bg-amber-100 shadow-sm">🥤 Es Jagung & Ketan</button>
+            </div>
+
+            <!-- Menu List Grid -->
+            <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <!-- Interactively Rendered via JS -->
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Bottom Floating Cart Bar -->
+    <div id="cart-bar" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t-2 border-amber-400 shadow-2xl p-3.5 z-30 hidden">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
+            <div>
+                <p class="text-xs text-gray-500 font-medium">Total (<span id="cart-count" class="font-bold text-amber-600">0</span> Item)</p>
+                <p class="text-lg font-black text-amber-600" id="cart-total">Rp 0</p>
+            </div>
+            <button onclick="openOrderModal()" class="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition">
+                <i class="fa-solid fa-cart-shopping"></i> Lihat Keranjang & Pesan
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Pemesanan & Alamat Lengkap -->
+    <div id="order-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+        <div class="bg-white rounded-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto p-5 shadow-2xl relative">
+            <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            
+            <h3 class="text-lg font-bold text-gray-800 mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-receipt text-amber-500"></i> Detail Pesanan & Pengiriman
+            </h3>
+            <p class="text-xs text-gray-500 mb-4">Periksa kembali item pesanan Anda dan isi formulir pengiriman di bawah ini.</p>
+
+            <!-- Rincian Keranjang Interaktif -->
+            <div class="bg-amber-50/70 p-3.5 rounded-xl mb-4 border border-amber-200">
+                <h4 class="text-xs font-bold text-amber-900 border-b border-amber-200 pb-1.5 mb-2 flex justify-between items-center">
+                    <span>Keranjang Belanja</span>
+                    <button onclick="clearCart()" class="text-[10px] text-red-500 hover:underline">Kosongkan Keranjang</button>
+                </h4>
+                <div id="cart-items-list" class="space-y-3 max-h-48 overflow-y-auto pr-1">
+                    <!-- Cart items list rendered here -->
+                </div>
+
+                <!-- Diskon & Promo Code -->
+                <div class="mt-3 pt-2 border-t border-amber-200 flex gap-2">
+                    <input type="text" id="promo-code" placeholder="Kode Promo (Contoh: JASUKE10)" class="text-xs p-2 rounded-lg border border-gray-300 uppercase flex-1 outline-none focus:ring-1 focus:ring-amber-500">
+                    <button onclick="applyPromo()" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-3 py-2 rounded-lg">Klaim</button>
+                </div>
+
+                <!-- Rincian Total Hitungan -->
+                <div class="mt-3 pt-2 border-t border-amber-200 space-y-1 text-xs">
+                    <div class="flex justify-between text-gray-600">
+                        <span>Subtotal Item</span>
+                        <span id="summary-subtotal" class="font-semibold">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between text-green-600 font-medium" id="discount-row" style="display:none;">
+                        <span>Diskon Promo (10%)</span>
+                        <span id="summary-discount">-Rp 0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-600">
+                        <span>Ongkos Kirim</span>
+                        <span id="summary-ongkir" class="font-semibold">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between text-amber-900 text-sm font-bold pt-1 border-t border-amber-200">
+                        <span>Total Bayar</span>
+                        <span id="summary-grandtotal">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Data Pemesan & Alamat -->
+            <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Pemesan *</label>
+                        <input type="text" id="cust-name" required placeholder="Nama lengkap..." class="w-full text-xs p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Nomor WA Pemesan *</label>
+                        <input type="tel" id="cust-phone" required placeholder="08123456789..." class="w-full text-xs p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Opsi Pengiriman *</label>
+                    <select id="delivery-option" onchange="updateCalculations()" class="w-full text-xs p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+                        <option value="delivery">Kirim ke Alamat (Kurir Lokal - Rp 15.000)</option>
+                        <option value="takeaway">Ambil Sendiri di Tempat (Rp 0)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Alamat Lengkap Pengiriman *</label>
+                    <textarea id="cust-address" required rows="2" placeholder="Nama Jalan, Nomor Rumah, RT/RW, Patokan..." class="w-full text-xs p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Metode Pembayaran *</label>
+                    <select id="payment-method" class="w-full text-xs p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+                        <option value="QRIS">QRIS / All Payment</option>
+                        <option value="Transfer Bank BCA">Transfer Bank (BCA)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Catatan Tambahan (Opsional)</label>
+                    <input type="text" id="cust-notes" placeholder="Contoh: Kejunya dibanyakan, dipisah sausnya..." class="w-full text-xs p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500 outline-none">
+                </div>
+
+                <!-- Tombol Submit Action -->
+                <div class="pt-2 flex flex-col gap-2">
+                    <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Kirim Pesanan via WhatsApp
+                    </button>
+                    <button type="button" onclick="sendViaEmail()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 border">
+                        <i class="fa-regular fa-envelope text-base text-red-500"></i> Kirim Pesanan via Email
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Application Logics -->
+    <script>
+        const menuData = [
+            {
+                id: 'jasuke',
+                category: 'jasuke',
+                title: 'Jasuke (Jagung Susu Keju)',
+                desc: 'Jagung manis hangat dilapisi keju parut tebal, susu kental manis & pilihan toping favorit dalam satu cup.',
+                image: 'https://cdn.phototourl.com/member/2026-09-27-413c482d-169e-41f4-905c-e94ad2190c83.jpg',
+                price: { medium: 15000, large: 19000 },
+                hasSize: true,
+                toppings: [
+                    'Susu Keju Original',
+                    'Susu Keju Pedas (Saus Pedas)',
+                    'Susu Keju Coklat (Meses)',
+                    'Susu Keju Milo',
+                    'Susu Keju Oreo',
+                    'Susu Keju Selai Nanas',
+                    'Susu Keju Selai Blueberry',
+                    'Susu Keju Selai Strawberry',
+                    'Susu Keju Asin Pedas (Garam Cabe)',
+                    'Susu Keju Kacang'
+                ]
+            },
+            {
+                id: 'kesuke',
+                category: 'kesuke',
+                title: 'Kesuke (Ketan Hitam Susu Keju)',
+                desc: 'Ketan hitam lembut nan legit disajikan hangat dengan susu kental manis dan parutan keju gurih melimpah dalam satu cup.',
+                image: 'https://cdn.phototourl.com/member/2026-09-27-588c5593-ae08-44b5-84d4-4ad84f8e3b87.jpg',
+                price: { medium: 16000, large: 20000 },
+                hasSize: true,
+                toppings: [
+                    'Susu Keju Original',
+                    'Susu Keju Gula Aren',
+                    'Susu Keju Kacang',
+                    'Susu Keju Milo',
+                    'Susu Keju Coklat'
+                ]
+            },
+            {
+                id: 'mix',
+                category: 'mix',
+                title: 'Mix Jasuke Kesuke (Jagung Ketan Hitam Susu Keju)',
+                desc: 'Kombinasi sempurna antara manisnya jagung manis dan lembutnya ketan hitam bertabur keju melimpah dalam satu cup!',
+                image: 'https://cdn.phototourl.com/member/2026-09-27-78286efe-199e-4aba-b869-ccc4073c68e3.jpg',
+                price: { medium: 18000, large: 23000 },
+                hasSize: true,
+                toppings: [
+                    'Susu Keju Original',
+                    'Susu Keju Gula Aren',
+                    'Susu Keju Kacang',
+                    'Susu Keju Milo',
+                    'Susu Keju Coklat'
+                ]
+            },
+            {
+                id: 'es-jagung',
+                category: 'es',
+                title: 'Es Jagung (Jagung Susu Keju)',
+                desc: 'Minuman es jagung manis dingin menyegarkan dipadu dengan keju parut & varian toping spesial dalam satu cup tinggi.',
+                image: 'https://cdn.phototourl.com/member/2026-09-27-137dd31d-d9b6-4ba9-b9b1-31d581f2cb89.png',
+                price: { single: 17000 },
+                hasSize: false,
+                toppings: [
+                    'Es Jagung Original',
+                    'Es Jagung Gula Aren',
+                    'Es Jagung Kacang',
+                    'Es Jagung Milo',
+                    'Es Jagung Coklat'
+                ]
+            },
+            {
+                id: 'es-ketan',
+                category: 'es',
+                title: 'Es Ketan (Ketan Hitam Susu Keju)',
+                desc: 'Minuman es ketan hitam dingin manis nan legit disajikan dengan siraman susu manis dan parutan keju dalam satu cup tinggi.',
+                image: 'https://cdn.phototourl.com/member/2026-09-27-9bda0752-3652-4bf2-b1ff-bcf9e6a18b40.jpg',
+                price: { single: 20000 },
+                hasSize: false,
+                toppings: [
+                    'Es Ketan Original',
+                    'Es Ketan Gula Aren',
+                    'Es Ketan Kacang',
+                    'Es Ketan Milo',
+                    'Es Ketan Coklat'
+                ]
+            }
+        ];
+
+        let cart = [];
+        let discountRate = 0;
+
+        function toppingVisual(topping) {
+            const t = topping.toLowerCase();
+            let emoji = '🧀', bg = '#fff7ed';
+            if (t.includes('coklat') || t.includes('meses')) { emoji = '🍫'; bg = '#fef3c7'; }
+            else if (t.includes('milo')) { emoji = '🥛'; bg = '#f3e8ff'; }
+            else if (t.includes('oreo')) { emoji = '🍪'; bg = '#e5e7eb'; }
+            else if (t.includes('nanas')) { emoji = '🍍'; bg = '#fef9c3'; }
+            else if (t.includes('blueberry')) { emoji = '🫐'; bg = '#dbeafe'; }
+            else if (t.includes('strawberry')) { emoji = '🍓'; bg = '#fee2e2'; }
+            else if (t.includes('kacang')) { emoji = '🥜'; bg = '#fef3c7'; }
+            else if (t.includes('gula aren')) { emoji = '🍯'; bg = '#ffedd5'; }
+            else if (t.includes('pedas') || t.includes('garam cabe')) { emoji = '🌶️'; bg = '#fee2e2'; }
+            else if (t.includes('ketan')) { emoji = '🍚'; bg = '#ede9fe'; }
+            else if (t.includes('jagung')) { emoji = '🌽'; bg = '#fef9c3'; }
+
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="90" viewBox="0 0 120 90">
+                <rect width="120" height="90" rx="14" fill="${bg}"/>
+                <text x="60" y="49" text-anchor="middle" font-size="34">${emoji}</text>
+            </svg>`;
+            return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+
+        function selectTopping(itemId, topping) {
+            const input = document.getElementById(`topping-${itemId}`);
+            if (input) input.value = topping;
+
+            document.querySelectorAll(`[data-topping-group="${itemId}"] .topping-option`).forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.topping === topping);
+            });
+        }
+
+        function renderMenu(filter = 'all') {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = '';
+
+            const filteredData = filter === 'all' 
+                ? menuData 
+                : menuData.filter(item => item.category === filter);
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'food-card bg-white/95 backdrop-blur-md rounded-2xl overflow-hidden border border-amber-200/80 flex flex-col justify-between shadow-lg';
+
+                let priceHtml = item.hasSize ? `
+                    <div class="flex gap-2 text-xs font-bold my-2">
+                        <span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-md border border-amber-200">Medium: Rp ${item.price.medium.toLocaleString()}</span>
+                        <span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-md border border-amber-200">Large: Rp ${item.price.large.toLocaleString()}</span>
+                    </div>
+                ` : `
+                    <div class="text-xs font-bold my-2">
+                        <span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-md border border-amber-200">Harga: Rp ${item.price.single.toLocaleString()}</span>
+                    </div>
+                `;
+
+                let sizeSelectorHtml = item.hasSize ? `
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Ukuran:</label>
+                        <select id="size-${item.id}" class="w-full text-xs p-2 rounded-lg border border-gray-200 bg-gray-50 focus:ring-1 focus:ring-amber-500 outline-none">
+                            <option value="medium">Medium (Rp ${item.price.medium.toLocaleString()})</option>
+                            <option value="large">Large (Rp ${item.price.large.toLocaleString()})</option>
+                        </select>
+                    </div>
+                ` : `<input type="hidden" id="size-${item.id}" value="single">`;
+
+                let toppingOptions = item.toppings.map((t, idx) => `
+                    <button type="button"
+                        class="topping-option ${idx === 0 ? 'selected' : ''}"
+                        data-topping="${t.replace(/"/g, '&quot;')}"
+                        onclick="selectTopping('${item.id}', this.dataset.topping)">
+                        <img src="${toppingVisual(t)}" alt="${t}">
+                        <span>${t}</span>
+                    </button>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="h-48 w-full overflow-hidden relative">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase shadow">Favorit</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 text-base mb-1">${item.title}</h3>
+                            <p class="text-xs text-gray-600 mb-2 leading-relaxed">${item.desc}</p>
+                            ${priceHtml}
+
+                            <div class="space-y-2 mt-3 pt-2 border-t border-gray-200">
+                                ${sizeSelectorHtml}
+                                <div>
+                                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1">Pilih Varian Rasa / Toping:</label>
+                                    <input type="hidden" id="topping-${item.id}" value="${item.toppings[0]}">
+                                    <div class="topping-grid" data-topping-group="${item.id}">
+                                        ${toppingOptions}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <button onclick="addToCart('${item.id}')" class="w-full bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-plus"></i> Tambah ke Pesanan
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterCategory(btn, cat) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('bg-amber-500', 'text-white', 'shadow-md');
+                b.classList.add('bg-white/90', 'text-gray-800');
+            });
+            btn.classList.remove('bg-white/90', 'text-gray-800');
+            btn.classList.add('bg-amber-500', 'text-white', 'shadow-md');
+            renderMenu(cat);
+        }
+
+        function addToCart(itemId) {
+            const item = menuData.find(m => m.id === itemId);
+            const sizeElem = document.getElementById(`size-${itemId}`);
+            const toppingElem = document.getElementById(`topping-${itemId}`);
+
+            const selectedSize = sizeElem ? sizeElem.value : 'single';
+            const selectedTopping = toppingElem ? toppingElem.value : 'Original';
+
+            let itemPrice = item.hasSize ? item.price[selectedSize] : item.price.single;
+
+            const cartItemId = item.id + '-' + selectedSize + '-' + selectedTopping.replace(/\s+/g, '-');
+
+            const existingIdx = cart.findIndex(ci => ci.id === cartItemId);
+            if (existingIdx > -1) {
+                cart[existingIdx].qty += 1;
+            } else {
+                cart.push({
+                    id: cartItemId,
+                    title: item.title,
+                    size: selectedSize,
+                    topping: selectedTopping,
+                    price: itemPrice,
+                    qty: 1
+                });
+            }
+
+            updateCartUI();
+        }
+
+        function changeQty(cartItemId, delta) {
+            const idx = cart.findIndex(ci => ci.id === cartItemId);
+            if (idx > -1) {
+                cart[idx].qty += delta;
+                if (cart[idx].qty <= 0) {
+                    cart.splice(idx, 1);
+                }
+            }
+            updateCartUI();
+            if (cart.length > 0) {
+                renderCartList();
+            } else {
+                closeOrderModal();
+            }
+        }
+
+        function removeItem(cartItemId) {
+            cart = cart.filter(ci => ci.id !== cartItemId);
+            updateCartUI();
+            if (cart.length > 0) {
+                renderCartList();
+            } else {
+                closeOrderModal();
+            }
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            closeOrderModal();
+        }
+
+        function updateCartUI() {
+            const cartBar = document.getElementById('cart-bar');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+            const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            cartCount.textContent = totalQty;
+            cartTotal.textContent = 'Rp ' + totalPrice.toLocaleString();
+
+            if (totalQty > 0) {
+                cartBar.classList.remove('hidden');
+            } else {
+                cartBar.classList.add('hidden');
+            }
+        }
+
+        function renderCartList() {
+            const listContainer = document.getElementById('cart-items-list');
+            listContainer.innerHTML = '';
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.qty;
+                const sizeText = item.size !== 'single' ? `(${item.size.toUpperCase()})` : '';
+
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-white p-2.5 rounded-lg border border-amber-100 text-xs';
+                div.innerHTML = `
+                    <img class="cart-thumb" src="${toppingVisual(item.topping)}" alt="${item.topping}">
+                    <div class="flex-1 pr-2 ml-2">
+                        <p class="font-bold text-gray-800">${item.title} ${sizeText}</p>
+                        <p class="text-[10px] text-gray-500">Toping: ${item.topping}</p>
+                        <p class="font-semibold text-amber-600 mt-0.5">Rp ${item.price.toLocaleString()} x ${item.qty} = Rp ${subtotal.toLocaleString()}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-amber-50 p-1 rounded-lg border border-amber-200">
+                        <button onclick="changeQty('${item.id}', -1)" class="w-6 h-6 bg-white rounded flex items-center justify-center text-gray-700 font-bold border hover:bg-amber-100">&minus;</button>
+                        <span class="w-5 text-center font-bold text-xs">${item.qty}</span>
+                        <button onclick="changeQty('${item.id}', 1)" class="w-6 h-6 bg-white rounded flex items-center justify-center text-gray-700 font-bold border hover:bg-amber-100">&plus;</button>
+                        <button onclick="removeItem('${item.id}')" class="w-6 h-6 text-red-500 hover:text-red-700 ml-1 flex items-center justify-center" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+
+            updateCalculations();
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promo-code').value.trim().toUpperCase();
+            if (code === 'JASUKE10') {
+                discountRate = 0.10;
+                alert('Selamat! Anda mendapatkan Diskon 10%');
+            } else {
+                discountRate = 0;
+                alert('Kode Promo tidak valid. Gunakan kode: JASUKE10');
+            }
+            updateCalculations();
+        }
+
+        function updateCalculations() {
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            const deliveryOption = document.getElementById('delivery-option').value;
+            const ongkir = deliveryOption === 'delivery' ? 15000 : 0;
+            const discount = subtotal * discountRate;
+            const grandTotal = subtotal - discount + ongkir;
+
+            document.getElementById('summary-subtotal').textContent = 'Rp ' + subtotal.toLocaleString();
+            
+            const discountRow = document.getElementById('discount-row');
+            if (discount > 0) {
+                discountRow.style.display = 'flex';
+                document.getElementById('summary-discount').textContent = '-Rp ' + discount.toLocaleString();
+            } else {
+                discountRow.style.display = 'none';
+            }
+
+            document.getElementById('summary-ongkir').textContent = 'Rp ' + ongkir.toLocaleString();
+            document.getElementById('summary-grandtotal').textContent = 'Rp ' + grandTotal.toLocaleString();
+        }
+
+        function openOrderModal() {
+            renderCartList();
+            document.getElementById('order-modal').classList.remove('hidden');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.add('hidden');
+        }
+
+        function getOrderSummaryData() {
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const delivery = document.getElementById('delivery-option').value;
+            const address = document.getElementById('cust-address').value;
+            const payment = document.getElementById('payment-method').value;
+            const notes = document.getElementById('cust-notes').value;
+
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            const ongkir = delivery === 'delivery' ? 15000 : 0;
+            const discount = subtotal * discountRate;
+            const grandTotal = subtotal - discount + ongkir;
+
+            let textItems = '';
+            cart.forEach((item, idx) => {
+                const itemSub = item.price * item.qty;
+                const sizeText = item.size !== 'single' ? `[${item.size.toUpperCase()}]` : '';
+                textItems += `${idx + 1}. *${item.title}* ${sizeText}\n   - Toping: ${item.topping}\n   - Qty: ${item.qty} x Rp ${item.price.toLocaleString()} = Rp ${itemSub.toLocaleString()}\n`;
+            });
+
+            return { name, phone, delivery, address, payment, notes, subtotal, discount, ongkir, grandTotal, textItems };
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            const data = getOrderSummaryData();
+
+            const message = 
+`*PESANAN BARU - JASUKE AA TETEH*
+---------------------------------------
+*Detail Pemesan:*
+• Nama: ${data.name}
+• No. HP/WA: ${data.phone}
+• Pengiriman: ${data.delivery === 'delivery' ? 'Kirim ke Alamat' : 'Ambil Sendiri'}
+• Alamat: ${data.address}
+• Metode Bayar: ${data.payment}
+${data.notes ? `• Catatan: ${data.notes}\n` : ''}
+---------------------------------------
+*Daftar Pesanan:*
+${data.textItems}
+---------------------------------------
+* Subtotal: Rp ${data.subtotal.toLocaleString()}
+${data.discount > 0 ? `* Diskon (10%): -Rp ${data.discount.toLocaleString()}\n` : ''}* Ongkir: Rp ${data.ongkir.toLocaleString()}
+*TOTAL BAYAR: Rp ${data.grandTotal.toLocaleString()}*
+---------------------------------------
+Mohon segera dikonfirmasi pesanan saya. Terima kasih!`;
+
+            const waNumber = '628134995039';
+            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function sendViaEmail() {
+            const data = getOrderSummaryData();
+            if(!data.name || !data.address) {
+                alert('Mohon isi nama dan alamat pengiriman terlebih dahulu!');
+                return;
+            }
+
+            const subject = encodeURIComponent(`Pesanan Baru Jasuke Aa Teteh - ${data.name}`);
+            const body = encodeURIComponent(
+`Halo Jasuke Aa Teteh,
+
+Berikut rincian pesanan saya:
+
+NAMA PEMESAN: ${data.name}
+NO TELP/WA: ${data.phone}
+OPSI PENGIRIMAN: ${data.delivery === 'delivery' ? 'Kirim ke Alamat' : 'Ambil Sendiri'}
+ALAMAT PENGIRIMAN:
+${data.address}
+
+METODE PEMBAYARAN: ${data.payment}
+CATATAN: ${data.notes || '-'}
+
+DAFTAR PESANAN:
+${data.textItems}
+Subtotal: Rp ${data.subtotal.toLocaleString()}
+${data.discount > 0 ? `Diskon: -Rp ${data.discount.toLocaleString()}\n` : ''}Ongkir: Rp ${data.ongkir.toLocaleString()}
+TOTAL BAYAR: Rp ${data.grandTotal.toLocaleString()}
+
+Mohon informasi proses pesanan selanjutnya. Terima kasih.`
+            );
+
+            window.location.href = `mailto:jasukeaateteh@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        // Initialize App
+        renderMenu('all');
+    </script>
+</body>
+</html>
